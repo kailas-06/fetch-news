@@ -8,7 +8,7 @@
   --secondary-color: #fff;
 }
 body {
-  background-color: lightblue;
+  background-color: #d9e8ed;
 }
 .main {
   margin-top: 50px;
@@ -20,4 +20,15 @@ body {
 }
 .card-header #news-img {
   height: 230px;
+}
+.card {
+  cursor: pointer;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-top: -2px;
+}
+
+.nav-item .nav-link.active {
+  color: blue !important;
 }

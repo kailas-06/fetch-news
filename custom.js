@@ -1,10 +1,10 @@
 const API_KEY = "547ba88fe1e1459aa8883c355079675e";
-const url = "https://newsapi.org/v2/everything?q=";
+const URL = "https://newsapi.org/v2/everything?q=";
 
 window.addEventListener("load", () => fetchNews("Apple"));
 
 async function fetchNews(query) {
-  const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+  const res = await fetch(`${URL}${query}&apiKey=${API_KEY}`);
   const data = await res.json();
   console.log(data);
   bindData(data.articles);
@@ -34,6 +34,26 @@ function bindData(articles) {
     const date = new Date(article.publishedAt).toLocaleString("en-US", {
       timeZone: "Asia/Jakarta",
     });
-    newsSource.innerHTML = `${article.source.name}`;
+    newsSource.innerHTML = `${article.source.name} . ${date}`;
+    cardClone.firstElementChild.addEventListener("click", () => {
+      window.open(article.url, "__blank");
+    });
   }
 }
+let currentNav = null;
+function onNavClick(id) {
+  fetchNews(id);
+  const navItem = document.getElementById(id);
+  currentNav?.classList.remove("active");
+  currentNav = navItem;
+  currentNav.classList.add("active");
+}
+
+const searchText = document.getElementById("search-text");
+const searchBtn = document.getElementById("search-button");
+
+searchBtn.addEventListener("click", () => {
+  const query = searchText.value;
+  if (!query) return;
+  fetchNews(query);
+});
