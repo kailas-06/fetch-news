@@ -3,20 +3,29 @@ const URL = "https://kailas-news-backend.onrender.com/news";
 window.addEventListener("load", () => fetchNews("food"));
 
 async function fetchNews(query) {
-  const res = await fetch(`${URL}`);
-  const data = await res.json();
-  console.log(data);
-  bindData(data.articles);
+  try {
+    const res = await fetch(`${URL}`);
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await res.json();
+    console.log(data);
+    bindData(data.articles);
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    // You can add code here to handle the error, such as displaying a message to the user
+  }
 }
+
 function bindData(articles) {
   const cardsContainer = document.getElementById("cards-container");
-  const cardsTemplete = document.getElementById("card-news-template");
+  const cardsTemplate = document.getElementById("card-news-template");
   cardsContainer.innerHTML = "";
 
   articles.forEach((article) => {
     if (!article.urlToImage) return;
 
-    const cardClone = cardsTemplete.content.cloneNode(true);
+    const cardClone = cardsTemplate.content.cloneNode(true);
     fillDataInCard(cardClone, article);
     cardsContainer.appendChild(cardClone);
   });
@@ -39,11 +48,15 @@ function bindData(articles) {
     });
   }
 }
+
 let currentNav = null;
+
 function onNavClick(id) {
   fetchNews(id);
   const navItem = document.getElementById(id);
-  currentNav?.classList.remove("active");
+  if (currentNav !== null) {
+    currentNav.classList.remove("active");
+  }
   currentNav = navItem;
   currentNav.classList.add("active");
 }
