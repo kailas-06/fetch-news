@@ -1,19 +1,16 @@
 const URL = "https://kailas-news-backend.onrender.com/news";
 
-window.addEventListener("load", () => fetchNews("food"));
+window.addEventListener("load", () => fetchNews(""));
 
 async function fetchNews(query) {
   try {
-    const res = await fetch(`${URL}`);
-    if (!res.ok) {
-      throw new Error("Network response was not ok");
-    }
+    const res = await fetch(URL);
+    if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
-    console.log(data);
     bindData(data.articles);
   } catch (error) {
     console.error("Error fetching news:", error);
-    // You can add code here to handle the error, such as displaying a message to the user
+    throw error;
   }
 }
 
