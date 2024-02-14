@@ -1,10 +1,9 @@
-const API_KEY = "547ba88fe1e1459aa8883c355079675e";
-const URL = "https://newsapi.org/v2/everything?q=";
+const URL = "https://kailas-news-backend.onrender.com/news";
 
-window.addEventListener("load", () => fetchNews("Apple"));
+window.addEventListener("load", () => fetchNews("food"));
 
 async function fetchNews(query) {
-  const res = await fetch(`${URL}${query}&apiKey=${API_KEY}`);
+  const res = await fetch(`${URL}`);
   const data = await res.json();
   console.log(data);
   bindData(data.articles);
