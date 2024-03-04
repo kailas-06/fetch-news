@@ -1,20 +1,22 @@
 // const URL = "https://kailas-news-backend.onrender.com/news";
 
-API_key = "547ba88fe1e1459aa8883c355079675e";
 const URL = "https://newsapi.org/v2/everything?q=";
+
+API_key = "547ba88fe1e1459aa8883c355079675e";
 // GET https://newsapi.org/v2/everything?q=bitcoin&apiKey=547ba88fe1e1459aa8883c355079675e
 
-window.addEventListener("load", () => fetchNews(""));
+window.addEventListener("load", () => fetchNews("India"));
 
 async function fetchNews(query) {
   try {
     // const url = query ? `${URL}?q=${encodeURIComponent(query)}` : URL;
-    const url = `${URL}${query}&apiKey=${API_key}`;
+    // const url = `${URL}${query}&apiKey=${API_key}`;
 
-    const res = await fetch(url);
+    const res = await fetch(`${URL}${query}&apiKey=${API_key}`);
+    console.log("res", res);
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
-    console.log("data", data);
+    // console.log("data", data);
     bindData(data.articles);
   } catch (error) {
     console.error("Error fetching news:", error);
