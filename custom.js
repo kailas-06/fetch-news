@@ -1,12 +1,20 @@
-const URL = "https://kailas-news-backend.onrender.com/news";
+// const URL = "https://kailas-news-backend.onrender.com/news";
+
+API_key = "547ba88fe1e1459aa8883c355079675e";
+const URL = "https://newsapi.org/v2/everything?q=";
+// GET https://newsapi.org/v2/everything?q=bitcoin&apiKey=547ba88fe1e1459aa8883c355079675e
 
 window.addEventListener("load", () => fetchNews(""));
 
 async function fetchNews(query) {
   try {
-    const res = await fetch(URL);
+    // const url = query ? `${URL}?q=${encodeURIComponent(query)}` : URL;
+    const url = `${URL}${query}&apiKey=${API_key}`;
+
+    const res = await fetch(url);
     if (!res.ok) throw new Error("Network response was not ok");
     const data = await res.json();
+    console.log("data", data);
     bindData(data.articles);
   } catch (error) {
     console.error("Error fetching news:", error);
@@ -62,7 +70,7 @@ const searchText = document.getElementById("search-text");
 const searchBtn = document.getElementById("search-button");
 
 searchBtn.addEventListener("click", () => {
-  const query = searchText.value;
+  const query = searchText.value.trim();
   if (!query) return;
   fetchNews(query);
 });
